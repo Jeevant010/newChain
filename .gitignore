@@ -167,3 +167,5 @@ Thumbs.db
 contractConfig.json
 
 package-lock.*
+
+.env.example
