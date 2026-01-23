@@ -149,9 +149,11 @@ node_modules
 # Build
 artifacts
 cache
+typechain
 typechain-types
 coverage
 coverage.json
+.wallet-session.json
 
 # IDE
 .idea
