@@ -54,13 +54,63 @@ export default function Home() {
     message: string;
     type: "success" | "error";
   } | null>(null);
+  const [transactionStatus, setTransactionStatus] = useState<string>("");
+  const [showAccountMenu, setShowAccountMenu] = useState(false);
 
-  const showNotification = (message: string, type: "success" | "error") => {
-    setNotification({ message, type });
-    setTimeout(() => setNotification(null), 5000);
-  };
+  const showNotification = useCallback(
+    (message: string, type: "success" | "error") => {
+      setNotification({ message, type });
+      setTimeout(() => setNotification(null), 5000);
+    },
+    [],
+  );
 
-  const connectWallet = async () => {
+  const disconnectWallet = useCallback(() => {
+    setAccount(null);
+    setContract(null);
+    setProvider(null);
+    setLands([]);
+    setShowAccountMenu(false);
+    showNotification("Wallet disconnected", "success");
+  }, [showNotification]);
+
+  const switchToHardhatNetwork = useCallback(async () => {
+    if (!window.ethereum) return false;
+
+    const hardhatChainId = "0x7A69"; // 31337 in hex
+
+    try {
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: hardhatChainId }],
+      });
+      return true;
+    } catch (switchError: unknown) {
+      // Chain not added, add it
+      if ((switchError as { code: number }).code === 4902) {
+        try {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: hardhatChainId,
+                chainName: "Hardhat Local",
+                nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+                rpcUrls: ["http://127.0.0.1:8545"],
+                blockExplorerUrls: [],
+              },
+            ],
+          });
+          return true;
+        } catch {
+          return false;
+        }
+      }
+      return false;
+    }
+  }, []);
+
+  const connectWallet = useCallback(async () => {
     if (!window.ethereum) {
       showNotification("Please install MetaMask!", "error");
       return;
@@ -68,6 +118,21 @@ export default function Home() {
 
     try {
       setIsLoading(true);
+      setTransactionStatus("Switching to Hardhat network...");
+
+      // Switch to Hardhat network first
+      const switched = await switchToHardhatNetwork();
+      if (!switched) {
+        showNotification(
+          "Please switch to Hardhat Local network (Chain ID: 31337)",
+          "error",
+        );
+        setIsLoading(false);
+        setTransactionStatus("");
+        return;
+      }
+
+      setTransactionStatus("Connecting to wallet...");
       const browserProvider = new BrowserProvider(window.ethereum);
       const accounts = (await window.ethereum.request({
         method: "eth_requestAccounts",
@@ -91,6 +156,31 @@ export default function Home() {
       showNotification("Failed to connect wallet", "error");
     } finally {
       setIsLoading(false);
+      setTransactionStatus("");
+    }
+  }, [showNotification, switchToHardhatNetwork]);
+
+  const switchAccount = async () => {
+    if (!window.ethereum) return;
+
+    try {
+      setShowAccountMenu(false);
+      // Request MetaMask to show account selection
+      await window.ethereum.request({
+        method: "wallet_requestPermissions",
+        params: [{ eth_accounts: {} }],
+      });
+      // After permission granted, get the new account
+      const accounts = (await window.ethereum.request({
+        method: "eth_accounts",
+      })) as string[];
+
+      if (accounts.length > 0 && accounts[0] !== account) {
+        await connectWallet();
+      }
+    } catch (error) {
+      console.error("Error switching account:", error);
+      showNotification("Failed to switch account", "error");
     }
   };
 
@@ -135,7 +225,52 @@ export default function Home() {
       }
     };
     checkConnection();
-  }, []);
+  }, [connectWallet]);
+
+  // Listen for account changes
+  useEffect(() => {
+    if (!window.ethereum) return;
+
+    const handleAccountsChanged = async (accounts: unknown) => {
+      const accountList = accounts as string[];
+      if (accountList.length === 0) {
+        // User disconnected
+        disconnectWallet();
+      } else if (accountList[0] !== account) {
+        // Account changed
+        setAccount(accountList[0]);
+        if (window.ethereum) {
+          const browserProvider = new BrowserProvider(window.ethereum);
+          setProvider(browserProvider);
+          const signer = await browserProvider.getSigner();
+          const landContract = new Contract(
+            contractConfig.address,
+            contractConfig.abi,
+            signer,
+          );
+          setContract(landContract);
+          showNotification(
+            `Switched to ${accountList[0].slice(0, 6)}...${accountList[0].slice(
+              -4,
+            )}`,
+            "success",
+          );
+        }
+      }
+    };
+
+    const handleChainChanged = () => {
+      window.location.reload();
+    };
+
+    window.ethereum.on("accountsChanged", handleAccountsChanged);
+    window.ethereum.on("chainChanged", handleChainChanged);
+
+    return () => {
+      window.ethereum?.removeListener("accountsChanged", handleAccountsChanged);
+      window.ethereum?.removeListener("chainChanged", handleChainChanged);
+    };
+  }, [account, disconnectWallet, showNotification]);
 
   const handleMapClick = (lat: number, lng: number) => {
     if (isRegistering) {
@@ -151,13 +286,18 @@ export default function Home() {
 
     try {
       setIsLoading(true);
+      setTransactionStatus("Preparing transaction...");
       const location = `Lat: ${selectedCoords[0].toFixed(
         4,
       )}, Lng: ${selectedCoords[1].toFixed(4)}`;
       const priceInWei = parseEther(newLandPrice);
       const tokenURI = `https://example.com/land/${Date.now()}`;
 
+      setTransactionStatus("Please confirm in MetaMask...");
       const tx = await contract.registerLand(location, priceInWei, tokenURI);
+      setTransactionStatus(
+        "Transaction submitted. Waiting for confirmation...",
+      );
       await tx.wait();
 
       showNotification("Land registered successfully!", "success");
@@ -170,6 +310,7 @@ export default function Home() {
       showNotification("Failed to register land", "error");
     } finally {
       setIsLoading(false);
+      setTransactionStatus("");
     }
   };
 
@@ -181,7 +322,11 @@ export default function Home() {
 
     try {
       setIsLoading(true);
+      setTransactionStatus("Please confirm purchase in MetaMask...");
       const tx = await contract.buyLand(landId, { value: land.price });
+      setTransactionStatus(
+        "Transaction submitted. Waiting for confirmation...",
+      );
       await tx.wait();
 
       showNotification("Land purchased successfully!", "success");
@@ -197,6 +342,7 @@ export default function Home() {
       }
     } finally {
       setIsLoading(false);
+      setTransactionStatus("");
     }
   };
 
@@ -225,9 +371,73 @@ export default function Home() {
 
           {account ? (
             <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-600 bg-gray-100 px-4 py-2 rounded-full">
-                {account.slice(0, 6)}...{account.slice(-4)}
-              </span>
+              {/* Account Dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => setShowAccountMenu(!showAccountMenu)}
+                  className="text-sm text-gray-600 bg-gray-100 px-4 py-2 rounded-full hover:bg-gray-200 transition-colors flex items-center gap-2"
+                >
+                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                  {account.slice(0, 6)}...{account.slice(-4)}
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+
+                {showAccountMenu && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                    <button
+                      onClick={switchAccount}
+                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                    >
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+                        />
+                      </svg>
+                      Switch Account
+                    </button>
+                    <button
+                      onClick={disconnectWallet}
+                      className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"
+                    >
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                        />
+                      </svg>
+                      Disconnect
+                    </button>
+                  </div>
+                )}
+              </div>
+
               <button
                 onClick={() => setIsRegistering(!isRegistering)}
                 className={`px-4 py-2 rounded-lg font-medium transition-colors ${
@@ -268,7 +478,7 @@ export default function Home() {
                   Selected Location
                 </label>
                 <input
-                title="Selected Location"
+                  title="Selected Location"
                   type="text"
                   readOnly
                   value={
@@ -399,11 +609,24 @@ export default function Home() {
       {/* Loading Overlay */}
       {isLoading && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 flex flex-col items-center">
+          <div className="bg-white rounded-lg p-6 flex flex-col items-center min-w-[300px]">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500 mb-4"></div>
-            <p className="text-gray-600">Processing transaction...</p>
+            <p className="text-gray-600 text-center">
+              {transactionStatus || "Processing..."}
+            </p>
+            <p className="text-xs text-gray-400 mt-2">
+              Please do not close this window
+            </p>
           </div>
         </div>
+      )}
+
+      {/* Click outside to close account menu */}
+      {showAccountMenu && (
+        <div
+          className="fixed inset-0 z-40"
+          onClick={() => setShowAccountMenu(false)}
+        />
       )}
     </div>
   );
