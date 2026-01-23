@@ -7,7 +7,7 @@ dotenv.config();
 // Validate environment variables for production networks
 const getPrivateKey = (): string[] => {
   const key = process.env.PRIVATE_KEY;
-  if (!key) {
+  if (!key || key === "your_private_key_here") {
     console.warn("⚠️ PRIVATE_KEY not set - only localhost available");
     return [];
   }
@@ -15,7 +15,8 @@ const getPrivateKey = (): string[] => {
   const cleanKey = key.startsWith("0x") ? key.slice(2) : key;
   // Basic validation - private key should be 64 hex chars
   if (!/^[a-fA-F0-9]{64}$/.test(cleanKey)) {
-    throw new Error("Invalid PRIVATE_KEY format - must be 64 hex characters");
+    console.warn("⚠️ Invalid PRIVATE_KEY format - only localhost available");
+    return [];
   }
   return [`0x${cleanKey}`];
 };

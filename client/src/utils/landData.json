@@ -1,0 +1,424 @@
+{
+  "governmentLands": [
+    {
+      "surveyNumber": "GOV-MH-001",
+      "location": "Lat: 19.0760, Lng: 72.8777",
+      "district": "Mumbai",
+      "state": "Maharashtra",
+      "area": "5000 sq meters",
+      "landType": "commercial",
+      "price": "50",
+      "description": "Prime commercial land in Mumbai CBD area, suitable for office complex or mixed-use development.",
+      "coordinates": {
+        "lat": 19.076,
+        "lng": 72.8777
+      }
+    },
+    {
+      "surveyNumber": "GOV-MH-002",
+      "location": "Lat: 18.5204, Lng: 73.8567",
+      "district": "Pune",
+      "state": "Maharashtra",
+      "area": "10000 sq meters",
+      "landType": "residential",
+      "price": "25",
+      "description": "Residential plot in Pune suburbs, ideal for housing society development.",
+      "coordinates": {
+        "lat": 18.5204,
+        "lng": 73.8567
+      }
+    },
+    {
+      "surveyNumber": "GOV-DL-001",
+      "location": "Lat: 28.6139, Lng: 77.2090",
+      "district": "New Delhi",
+      "state": "Delhi",
+      "area": "3000 sq meters",
+      "landType": "government",
+      "price": "100",
+      "description": "Government allocated land near Connaught Place, premium location.",
+      "coordinates": {
+        "lat": 28.6139,
+        "lng": 77.209
+      }
+    },
+    {
+      "surveyNumber": "GOV-DL-002",
+      "location": "Lat: 28.5355, Lng: 77.3910",
+      "district": "Noida",
+      "state": "Delhi NCR",
+      "area": "8000 sq meters",
+      "landType": "industrial",
+      "price": "15",
+      "description": "Industrial land in Noida sector, perfect for manufacturing unit or warehouse.",
+      "coordinates": {
+        "lat": 28.5355,
+        "lng": 77.391
+      }
+    },
+    {
+      "surveyNumber": "GOV-KA-001",
+      "location": "Lat: 12.9716, Lng: 77.5946",
+      "district": "Bangalore",
+      "state": "Karnataka",
+      "area": "6000 sq meters",
+      "landType": "commercial",
+      "price": "45",
+      "description": "IT corridor land in Bangalore, ideal for tech park development.",
+      "coordinates": {
+        "lat": 12.9716,
+        "lng": 77.5946
+      }
+    },
+    {
+      "surveyNumber": "GOV-KA-002",
+      "location": "Lat: 12.2958, Lng: 76.6394",
+      "district": "Mysore",
+      "state": "Karnataka",
+      "area": "15000 sq meters",
+      "landType": "agricultural",
+      "price": "8",
+      "description": "Agricultural land near Mysore, fertile soil suitable for farming.",
+      "coordinates": {
+        "lat": 12.2958,
+        "lng": 76.6394
+      }
+    },
+    {
+      "surveyNumber": "GOV-TN-001",
+      "location": "Lat: 13.0827, Lng: 80.2707",
+      "district": "Chennai",
+      "state": "Tamil Nadu",
+      "area": "4000 sq meters",
+      "landType": "residential",
+      "price": "30",
+      "description": "Residential plot in Chennai, close to IT corridor and metro station.",
+      "coordinates": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      }
+    },
+    {
+      "surveyNumber": "GOV-TN-002",
+      "location": "Lat: 11.0168, Lng: 76.9558",
+      "district": "Coimbatore",
+      "state": "Tamil Nadu",
+      "area": "12000 sq meters",
+      "landType": "industrial",
+      "price": "12",
+      "description": "Industrial zone land in Coimbatore, excellent connectivity.",
+      "coordinates": {
+        "lat": 11.0168,
+        "lng": 76.9558
+      }
+    },
+    {
+      "surveyNumber": "GOV-GJ-001",
+      "location": "Lat: 23.0225, Lng: 72.5714",
+      "district": "Ahmedabad",
+      "state": "Gujarat",
+      "area": "7000 sq meters",
+      "landType": "commercial",
+      "price": "35",
+      "description": "Commercial land in Ahmedabad business district, high footfall area.",
+      "coordinates": {
+        "lat": 23.0225,
+        "lng": 72.5714
+      }
+    },
+    {
+      "surveyNumber": "GOV-GJ-002",
+      "location": "Lat: 21.1702, Lng: 72.8311",
+      "district": "Surat",
+      "state": "Gujarat",
+      "area": "9000 sq meters",
+      "landType": "industrial",
+      "price": "18",
+      "description": "Diamond and textile industry zone land in Surat.",
+      "coordinates": {
+        "lat": 21.1702,
+        "lng": 72.8311
+      }
+    },
+    {
+      "surveyNumber": "GOV-RJ-001",
+      "location": "Lat: 26.9124, Lng: 75.7873",
+      "district": "Jaipur",
+      "state": "Rajasthan",
+      "area": "20000 sq meters",
+      "landType": "residential",
+      "price": "20",
+      "description": "Large residential plot near Jaipur, suitable for township development.",
+      "coordinates": {
+        "lat": 26.9124,
+        "lng": 75.7873
+      }
+    },
+    {
+      "surveyNumber": "GOV-RJ-002",
+      "location": "Lat: 26.4499, Lng: 74.6399",
+      "district": "Ajmer",
+      "state": "Rajasthan",
+      "area": "25000 sq meters",
+      "landType": "agricultural",
+      "price": "5",
+      "description": "Vast agricultural land near Ajmer, water resources available.",
+      "coordinates": {
+        "lat": 26.4499,
+        "lng": 74.6399
+      }
+    },
+    {
+      "surveyNumber": "GOV-WB-001",
+      "location": "Lat: 22.5726, Lng: 88.3639",
+      "district": "Kolkata",
+      "state": "West Bengal",
+      "area": "3500 sq meters",
+      "landType": "commercial",
+      "price": "40",
+      "description": "Commercial land in Kolkata Salt Lake area, IT hub proximity.",
+      "coordinates": {
+        "lat": 22.5726,
+        "lng": 88.3639
+      }
+    },
+    {
+      "surveyNumber": "GOV-UP-001",
+      "location": "Lat: 26.8467, Lng: 80.9462",
+      "district": "Lucknow",
+      "state": "Uttar Pradesh",
+      "area": "11000 sq meters",
+      "landType": "residential",
+      "price": "15",
+      "description": "Residential land in Lucknow Gomti Nagar extension.",
+      "coordinates": {
+        "lat": 26.8467,
+        "lng": 80.9462
+      }
+    },
+    {
+      "surveyNumber": "GOV-UP-002",
+      "location": "Lat: 27.1767, Lng: 78.0081",
+      "district": "Agra",
+      "state": "Uttar Pradesh",
+      "area": "5000 sq meters",
+      "landType": "commercial",
+      "price": "22",
+      "description": "Tourism zone commercial land near Taj Mahal, hotel development potential.",
+      "coordinates": {
+        "lat": 27.1767,
+        "lng": 78.0081
+      }
+    },
+    {
+      "surveyNumber": "GOV-KL-001",
+      "location": "Lat: 9.9312, Lng: 76.2673",
+      "district": "Kochi",
+      "state": "Kerala",
+      "area": "4500 sq meters",
+      "landType": "commercial",
+      "price": "38",
+      "description": "Waterfront commercial land in Kochi, perfect for hospitality.",
+      "coordinates": {
+        "lat": 9.9312,
+        "lng": 76.2673
+      }
+    },
+    {
+      "surveyNumber": "GOV-KL-002",
+      "location": "Lat: 8.5241, Lng: 76.9366",
+      "district": "Trivandrum",
+      "state": "Kerala",
+      "area": "6000 sq meters",
+      "landType": "residential",
+      "price": "28",
+      "description": "Residential plot in Trivandrum technopark area.",
+      "coordinates": {
+        "lat": 8.5241,
+        "lng": 76.9366
+      }
+    },
+    {
+      "surveyNumber": "GOV-AP-001",
+      "location": "Lat: 17.3850, Lng: 78.4867",
+      "district": "Hyderabad",
+      "state": "Telangana",
+      "area": "8000 sq meters",
+      "landType": "commercial",
+      "price": "55",
+      "description": "HITEC City adjacent commercial land, premium IT corridor.",
+      "coordinates": {
+        "lat": 17.385,
+        "lng": 78.4867
+      }
+    },
+    {
+      "surveyNumber": "GOV-AP-002",
+      "location": "Lat: 16.5062, Lng: 80.6480",
+      "district": "Vijayawada",
+      "state": "Andhra Pradesh",
+      "area": "10000 sq meters",
+      "landType": "residential",
+      "price": "18",
+      "description": "Capital region residential land near Amaravati.",
+      "coordinates": {
+        "lat": 16.5062,
+        "lng": 80.648
+      }
+    },
+    {
+      "surveyNumber": "GOV-PB-001",
+      "location": "Lat: 30.7333, Lng: 76.7794",
+      "district": "Chandigarh",
+      "state": "Punjab",
+      "area": "5500 sq meters",
+      "landType": "residential",
+      "price": "32",
+      "description": "Planned city residential plot in Chandigarh sector.",
+      "coordinates": {
+        "lat": 30.7333,
+        "lng": 76.7794
+      }
+    },
+    {
+      "surveyNumber": "GOV-PB-002",
+      "location": "Lat: 31.6340, Lng: 74.8723",
+      "district": "Amritsar",
+      "state": "Punjab",
+      "area": "7500 sq meters",
+      "landType": "commercial",
+      "price": "20",
+      "description": "Commercial land near Golden Temple tourism zone.",
+      "coordinates": {
+        "lat": 31.634,
+        "lng": 74.8723
+      }
+    },
+    {
+      "surveyNumber": "GOV-HR-001",
+      "location": "Lat: 28.4595, Lng: 77.0266",
+      "district": "Gurgaon",
+      "state": "Haryana",
+      "area": "6000 sq meters",
+      "landType": "commercial",
+      "price": "60",
+      "description": "Cyber City commercial land, premium corporate location.",
+      "coordinates": {
+        "lat": 28.4595,
+        "lng": 77.0266
+      }
+    },
+    {
+      "surveyNumber": "GOV-MP-001",
+      "location": "Lat: 23.2599, Lng: 77.4126",
+      "district": "Bhopal",
+      "state": "Madhya Pradesh",
+      "area": "12000 sq meters",
+      "landType": "residential",
+      "price": "14",
+      "description": "Lake-view residential land in Bhopal new development zone.",
+      "coordinates": {
+        "lat": 23.2599,
+        "lng": 77.4126
+      }
+    },
+    {
+      "surveyNumber": "GOV-MP-002",
+      "location": "Lat: 22.7196, Lng: 75.8577",
+      "district": "Indore",
+      "state": "Madhya Pradesh",
+      "area": "8500 sq meters",
+      "landType": "industrial",
+      "price": "10",
+      "description": "SEZ adjacent industrial land in Indore.",
+      "coordinates": {
+        "lat": 22.7196,
+        "lng": 75.8577
+      }
+    },
+    {
+      "surveyNumber": "GOV-OR-001",
+      "location": "Lat: 20.2961, Lng: 85.8245",
+      "district": "Bhubaneswar",
+      "state": "Odisha",
+      "area": "9000 sq meters",
+      "landType": "commercial",
+      "price": "16",
+      "description": "Smart city zone commercial land in Bhubaneswar.",
+      "coordinates": {
+        "lat": 20.2961,
+        "lng": 85.8245
+      }
+    },
+    {
+      "surveyNumber": "GOV-BR-001",
+      "location": "Lat: 25.6093, Lng: 85.1376",
+      "district": "Patna",
+      "state": "Bihar",
+      "area": "7000 sq meters",
+      "landType": "residential",
+      "price": "12",
+      "description": "Residential land near Patna Junction, good connectivity.",
+      "coordinates": {
+        "lat": 25.6093,
+        "lng": 85.1376
+      }
+    },
+    {
+      "surveyNumber": "GOV-AS-001",
+      "location": "Lat: 26.1445, Lng: 91.7362",
+      "district": "Guwahati",
+      "state": "Assam",
+      "area": "10000 sq meters",
+      "landType": "commercial",
+      "price": "14",
+      "description": "Gateway to Northeast commercial land in Guwahati.",
+      "coordinates": {
+        "lat": 26.1445,
+        "lng": 91.7362
+      }
+    },
+    {
+      "surveyNumber": "GOV-JH-001",
+      "location": "Lat: 23.3441, Lng: 85.3096",
+      "district": "Ranchi",
+      "state": "Jharkhand",
+      "area": "15000 sq meters",
+      "landType": "industrial",
+      "price": "8",
+      "description": "Mining belt industrial land in Ranchi.",
+      "coordinates": {
+        "lat": 23.3441,
+        "lng": 85.3096
+      }
+    },
+    {
+      "surveyNumber": "GOV-CG-001",
+      "location": "Lat: 21.2514, Lng: 81.6296",
+      "district": "Raipur",
+      "state": "Chhattisgarh",
+      "area": "11000 sq meters",
+      "landType": "residential",
+      "price": "9",
+      "description": "New capital residential land in Naya Raipur.",
+      "coordinates": {
+        "lat": 21.2514,
+        "lng": 81.6296
+      }
+    },
+    {
+      "surveyNumber": "GOV-GA-001",
+      "location": "Lat: 15.2993, Lng: 74.1240",
+      "district": "Panaji",
+      "state": "Goa",
+      "area": "3000 sq meters",
+      "landType": "commercial",
+      "price": "45",
+      "description": "Beach-adjacent commercial land, tourism hotspot.",
+      "coordinates": {
+        "lat": 15.2993,
+        "lng": 74.124
+      }
+    }
+  ]
+}
